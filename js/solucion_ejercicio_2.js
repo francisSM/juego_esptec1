@@ -38,21 +38,6 @@ function getRandomValue(min, max) {
 
 const hero = new Character("Heroe", getRandomValue(80, 120), getRandomValue(15, 25), "hero-health-bar");
 const enemy = new Character("Limo", getRandomValue(80, 120), getRandomValue(10, 20), "enemy-health-bar");
-
-  // Funciones para manejar los ataques
-  function heroAttack() {
-    hero.attack(enemy);
-    if (!enemy.isAlive()) {
-      document.getElementById('enemy-attack-button').disabled = true;
-    }
-  }
-  
-  function enemyAttack() {
-    enemy.attack(hero);
-    if (!hero.isAlive()) {
-      document.getElementById('hero-attack-button').disabled = true;
-    }
-  }
   
   console.log("Empieza el combate!");
   console.log(hero.status());
@@ -64,8 +49,17 @@ const movementInterval = setInterval(() => {
 }, 20); // suavidad del movimiento, mientras más es más lento
 
 // métodos para detectar cuando se presiona y suelta una tecla 
+// y ataques :D
 document.addEventListener('keydown', function(event) {
   keysPressed[event.key] = true;
+
+  // Ataques
+  if (event.key === 'g') {
+    heroAttack();
+  }
+  if (event.key === 'l') {
+    enemyAttack();
+  }
 });
 
 document.addEventListener('keyup', function(event) {
@@ -109,6 +103,33 @@ function moveCharacters() {
     enemyContainer.style.right = enemyLeft - step + 'px';
   }
   if (keysPressed['ArrowLeft'] && enemyLeft < window.innerWidth - enemyContainer.offsetWidth) {
-    enemyContainer.style.right = enemyLeft + step + 'px';
+    enemyContainer.
+    style.right = enemyLeft + step + 'px';
+  }
+}
+
+function heroAttack() {
+  if (hero.isAlive() && enemy.isAlive()) {
+    hero.attack(enemy);
+    
+    if (!enemy.isAlive()) {
+      console.log('¡El enemigo ha sido derrotado!');
+      document.removeEventListener('keydown', handleEnemyAttackKey);
+    }
+  } else {
+    console.log('El héroe o el enemigo ya no pueden atacar.');
+  }
+}
+  
+function enemyAttack() {
+  if (enemy.isAlive() && hero.isAlive()) {
+    enemy.attack(hero);
+    
+    if (!hero.isAlive()) {
+      console.log('¡El héroe ha sido derrotado!');
+      document.removeEventListener('keydown', handleHeroAttackKey);
+    }
+  } else {
+    console.log('El héroe o el enemigo ya no pueden atacar.');
   }
 }
