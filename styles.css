@@ -1,0 +1,69 @@
+body {
+    background-image: url('imagenes/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+    padding-top: 50px;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+  }
+  
+  .battlefield {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .character-container {
+    width: 300px;
+  }
+  
+  .character-image {
+    width: 150px; /* Ajustar el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .health-bar-container {
+    width: 200px;
+    background-color: #ddd;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .health-bar {
+    height: 30px;
+    width: 100%;
+    background-color: green;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    border-radius: 25px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  .attack-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .attack-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  
