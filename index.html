@@ -10,7 +10,7 @@
     <h1>¡Combate Épico!</h1>
 
     <div class="battlefield">
-      <div class="character-container">
+      <div id="hero-container" class="character-container" style="top: 100px; left: 50px;">
         <h3>UFRO</h3>
         <img src="imagenes/ufro logo.jpg" alt="Heroe" class="character-image">
         <div class="health-bar-container">
@@ -20,8 +20,8 @@
           <button id="hero-attack-button" class="attack-button" onclick="heroAttack()">Atacar</button>
         </div>
       </div>
-
-      <div class="character-container">
+    
+      <div id="enemy-container" class="character-container" style="top: 100px; right: 50px;">
         <h3>UCT</h3>
         <img src="imagenes/uct logo.png" alt="Limo" class="character-image">
         <div class="health-bar-container">
@@ -32,6 +32,7 @@
         </div>
       </div>
     </div>
+    
 
     <script src="js/solucion_ejercicio_2.js"></script>
   </body>

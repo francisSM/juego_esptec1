@@ -58,3 +58,57 @@ const enemy = new Character("Limo", getRandomValue(80, 120), getRandomValue(10, 
   console.log(hero.status());
   console.log(enemy.status());
   
+const keysPressed = {};
+const movementInterval = setInterval(() => {
+  moveCharacters();
+}, 20); // suavidad del movimiento, mientras más es más lento
+
+// métodos para detectar cuando se presiona y suelta una tecla 
+document.addEventListener('keydown', function(event) {
+  keysPressed[event.key] = true;
+});
+
+document.addEventListener('keyup', function(event) {
+  delete keysPressed[event.key];
+});
+
+function moveCharacters() {
+  const heroContainer = document.getElementById('hero-container');
+  const enemyContainer = document.getElementById('enemy-container');
+
+  let heroTop = parseInt(window.getComputedStyle(heroContainer).top);
+  let heroLeft = parseInt(window.getComputedStyle(heroContainer).left);
+  
+  let enemyTop = parseInt(window.getComputedStyle(enemyContainer).top);
+  let enemyLeft = parseInt(window.getComputedStyle(enemyContainer).right);
+
+  const step = 10; // cant de pixeles que se mueven
+
+  // mov del heroe (AWSD)
+  if (keysPressed['w'] && heroTop > 0) {
+    heroContainer.style.top = heroTop - step + 'px';
+  }
+  if (keysPressed['s'] && heroTop < window.innerHeight - heroContainer.offsetHeight) {
+    heroContainer.style.top = heroTop + step + 'px';
+  }
+  if (keysPressed['a'] && heroLeft > 0) {
+    heroContainer.style.left = heroLeft - step + 'px';
+  }
+  if (keysPressed['d'] && heroLeft < window.innerWidth - heroContainer.offsetWidth) {
+    heroContainer.style.left = heroLeft + step + 'px';
+  }
+
+  // mov del enemigo (flechas)
+  if (keysPressed['ArrowUp'] && enemyTop > 0) {
+    enemyContainer.style.top = enemyTop - step + 'px';
+  }
+  if (keysPressed['ArrowDown'] && enemyTop < window.innerHeight - enemyContainer.offsetHeight) {
+    enemyContainer.style.top = enemyTop + step + 'px';
+  }
+  if (keysPressed['ArrowRight'] && enemyLeft > 0) {
+    enemyContainer.style.right = enemyLeft - step + 'px';
+  }
+  if (keysPressed['ArrowLeft'] && enemyLeft < window.innerWidth - enemyContainer.offsetWidth) {
+    enemyContainer.style.right = enemyLeft + step + 'px';
+  }
+}
