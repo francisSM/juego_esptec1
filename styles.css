@@ -60,14 +60,18 @@ html, body {
 #displayText {
     position: absolute;
     color: black;
-    display: none;
+    display: none; /* Mantener oculto inicialmente */
     align-items: center;
     justify-content: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 24px; /* Ajusta el tamaño de la fuente según lo necesites */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente para mejor legibilidad */
+    padding: 10px; /* Espaciado interno */
+    border: 2px solid black; /* Borde para mejor definición */
 }
+
 
 canvas {
     display: block;
