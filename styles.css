@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background-color: lightblue;
+}
+
+#container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+#healthContainer {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+    top: 10px; /* Ajusta la posición según lo necesites */
+}
+
+.healthBar {
+    position: relative;
+    width: 100%;
+    border: 4px solid black;
+    background-color: red;
+    height: 30px;
+    margin: 0 10px; /* Espaciado entre las barras de salud */
+}
+
+.health {
+    position: absolute;
+    background: green;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%; /* Cambia este valor dinámicamente con JavaScript */
+}
+
+#separador {
+    background-color: white;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    border: 4px solid black;
+    margin: 0 10px; /* Espaciado del temporizador */
+}
+
+#displayText {
+    position: absolute;
+    color: black;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px; /* Ajusta el tamaño de la fuente según lo necesites */
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
