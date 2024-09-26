@@ -26,14 +26,13 @@ class Sprite {
         };
         this.isAttacking = false;
         this.health = 100;
-        this.facingRight = true;  // Bandera para determinar hacia dónde está mirando
+        this.facingRight = true;
     }
 
     draw() {
         ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         
-        // Dibujar el attackBox solo si está atacando
         if (this.isAttacking) {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
@@ -49,7 +48,7 @@ class Sprite {
             this.attackBox.offset.x = 0; // El ataque se desplaza a la derecha
         } else {
             this.facingRight = false;
-            this.attackBox.offset.x = -this.attackBox.width/2; // El ataque se desplaza a la izquierda
+            this.attackBox.offset.x = -this.attackBox.width / 2; // El ataque se desplaza a la izquierda
         }
 
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
@@ -124,6 +123,8 @@ const keys = {
 };
 
 let lastKey;
+let gameOver = false;
+let animationId;
 
 function rectangularcollision({ rectangle1, rectangle2 }) {
     return (
@@ -134,38 +135,90 @@ function rectangularcollision({ rectangle1, rectangle2 }) {
     );
 }
 
-let gameOver = false; // Variable para controlar el estado del juego
-
 function displayResult(result) {
     const displayTextElement = document.getElementById('displayText');
     displayTextElement.innerHTML = result;
-    displayTextElement.style.display = 'flex'; // Mostrar el texto
+    displayTextElement.style.display = 'flex';
 }
 
-// Suponiendo que esta función se llame cuando se determina el ganador
+// Variables para el menú y los botones
+const menuPrincipal = document.getElementById('menuPrincipal');
+const container = document.getElementById('container');
+const startGameBtn = document.getElementById('startGameBtn');
+const exitGameBtn = document.getElementById('exitGameBtn');
+const playAgainBtn = document.getElementById('playAgainBtn');
+const backToMenuBtn = document.getElementById('backToMenuBtn');
+const endGameMenu = document.getElementById('endGameMenu');
+
+// Función para iniciar el juego
+function startGame() {
+    menuPrincipal.style.display = 'none';
+    container.style.display = 'block';
+    gameOver = false;
+    
+    player.position = { x: 150, y: 474 };
+    player.velocity = { x: 0, y: 0 };
+    
+    enemy.position = { x: 1600, y: 474 };
+    enemy.velocity = { x: 0, y: 0 };
+    
+    player.health = 100;
+    enemy.health = 100;
+    document.querySelector('#playerHealth').style.width = player.health + '%';
+    document.querySelector('#enemyHealth').style.width = enemy.health + '%';
+    
+    document.getElementById('displayText').style.display = 'none';
+    endGameMenu.style.display = 'none';
+    animate();
+}
+
+
+// Función para volver al menú principal
+function backToMenu() {
+    menuPrincipal.style.display = 'block';  // Mostrar el menú principal
+    container.style.display = 'none';       // Ocultar el contenedor del juego
+    endGameMenu.style.display = 'none';     // Asegúrate de ocultar el menú de fin de juego
+    document.getElementById('displayText').style.display = 'none'; // Ocultar cualquier texto de resultado
+    window.cancelAnimationFrame(animationId);
+}
+
+
+startGameBtn.addEventListener('click', startGame);
+
+exitGameBtn.addEventListener('click', () => {
+    window.close();
+});
+
+backToMenuBtn.addEventListener('click', backToMenu);
+playAgainBtn.addEventListener('click', startGame);
+
+function showEndGameMenu() {
+    endGameMenu.style.display = 'flex';
+}
+
 function determineWinner() {
     if (enemy.health <= 0) {
-        displayResult('Player Wins!');
+        displayResult('¡Ganó el Player 1!');
         gameOver = true;
+        showEndGameMenu();
     } else if (player.health <= 0) {
-        displayResult('Enemy Wins!');
+        displayResult('¡Ganó Player 2!');
         gameOver = true;
+        showEndGameMenu();
     } else if (enemy.health <= 0 && player.health <= 0) {
-        displayResult('It\'s a Tie!');
+        displayResult('¡Empate!');
         gameOver = true;
+        showEndGameMenu();
     }
 }
 
-let animationId; // Variable para almacenar el id de la animación
-
 function animate() {
-    if (gameOver) return; // Si el juego ha terminado, salir de la función
+    if (gameOver) return;
     animationId = window.requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Actualizar y dibujar al jugador y al enemigo
-    player.update(enemy); // Pasar el enemigo para determinar la dirección
-    enemy.update(player); // Pasar el jugador para determinar la dirección
+    player.update(enemy);
+    enemy.update(player);
 
     // Movimiento del jugador
     if (keys.a.pressed && player.position.x > 30 && lastKey === 'a') {
@@ -196,7 +249,7 @@ function animate() {
         enemy.health -= 20;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
         console.log('Player hit enemy');
-        determineWinner(); // Verificar ganador después del golpe
+        determineWinner(); // Verificar si el juego ha terminado
     }
 
     // Colisión del enemigo atacando al jugador
@@ -209,12 +262,10 @@ function animate() {
         enemy.isAttacking = false;
         player.health -= 20;
         document.querySelector('#playerHealth').style.width = player.health + '%';
-        console.log('enemy hit player');
-        determineWinner(); // Verificar ganador después del golpe
+        console.log('Enemy hit player');
+        determineWinner();
     }
 }
-
-animate();
 
 // Movimiento
 window.addEventListener('keydown', (event) => {
