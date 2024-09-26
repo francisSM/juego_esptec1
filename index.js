@@ -14,30 +14,44 @@ class Sprite {
         this.width = 50; 
         this.height = 150;
         this.lastKey;
-        this.isOnGround = false;  // Bandera para saber si está tocando el suelo
+        this.isOnGround = false;
         this.attackBox = {
             position: {
-                x:this.position.x,
-                y:this.position.y
+                x: this.position.x,
+                y: this.position.y
             },
             offset: offset,
             width: 100,
             height: 50
         };
-        this.isAttacking;
+        this.isAttacking = false;
         this.health = 100;
+        this.facingRight = true;  // Bandera para determinar hacia dónde está mirando
     }
 
     draw() {
         ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        if (this.isAttacking){
+        
+        // Dibujar el attackBox solo si está atacando
+        if (this.isAttacking) {
+            ctx.fillStyle = 'yellow';
             ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
         }
     }
 
-    update() {
+    update(opponent) {
         this.draw();
+
+        // Determinar si el jugador debe atacar a la izquierda o a la derecha
+        if (this.position.x < opponent.position.x) {
+            this.facingRight = true;
+            this.attackBox.offset.x = 0; // El ataque se desplaza a la derecha
+        } else {
+            this.facingRight = false;
+            this.attackBox.offset.x = -this.attackBox.width/2; // El ataque se desplaza a la izquierda
+        }
+
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
         this.attackBox.position.y = this.position.y;
 
@@ -105,18 +119,18 @@ const enemy = new Sprite({
 const keys = {
     a: { pressed: false },
     d: { pressed: false },
-    ArrowRight: { pressed: false},
-    ArrowLeft: { pressed: false}
+    ArrowRight: { pressed: false },
+    ArrowLeft: { pressed: false }
 };
 
 let lastKey;
 
-function rectangularcollision({rectangle1, rectangle2}) {
+function rectangularcollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
         rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height 
+        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
     );
 }
 
@@ -128,6 +142,7 @@ function displayResult(result) {
     displayTextElement.style.display = 'flex'; // Mostrar el texto
 }
 
+// Suponiendo que esta función se llame cuando se determina el ganador
 function determineWinner() {
     if (enemy.health <= 0) {
         displayResult('Player Wins!');
@@ -147,24 +162,27 @@ function animate() {
     if (gameOver) return; // Si el juego ha terminado, salir de la función
     animationId = window.requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.update();
-    enemy.update();
+    
+    // Actualizar y dibujar al jugador y al enemigo
+    player.update(enemy); // Pasar el enemigo para determinar la dirección
+    enemy.update(player); // Pasar el jugador para determinar la dirección
 
-    // Movimiento del jugador con los límites
+    // Movimiento del jugador
     if (keys.a.pressed && player.position.x > 30 && lastKey === 'a') {
         player.velocity.x = -10;
-    } else if (keys.d.pressed && player.position.x + player.width < canvas.width-30  && lastKey === 'd') {
+    } else if (keys.d.pressed && player.position.x + player.width < canvas.width - 30 && lastKey === 'd') {
         player.velocity.x = 10;
     } else {
-        player.velocity.x = 0; // Detener el movimiento si no se presionan teclas
+        player.velocity.x = 0;
     }
 
+    // Movimiento del enemigo
     if (keys.ArrowLeft.pressed && enemy.position.x > 30 && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -10;
-    } else if (keys.ArrowRight.pressed && enemy.position.x + enemy.width < canvas.width-30 && enemy.lastKey === 'ArrowRight') {
+    } else if (keys.ArrowRight.pressed && enemy.position.x + enemy.width < canvas.width - 30 && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 10;
     } else {
-        enemy.velocity.x = 0; // Detener el movimiento si no se presionan teclas
+        enemy.velocity.x = 0;
     }
 
     // Colisión del jugador atacando al enemigo
@@ -212,9 +230,9 @@ window.addEventListener('keydown', (event) => {
             lastKey = 'a';
             break;
         case 'w':
-            if (player.isOnGround) { // Solo permitir saltar si está en el suelo
+            if (player.isOnGround) {
                 player.velocity.y = -20;
-                player.isOnGround = false; // Una vez que salta, ya no está en el suelo
+                player.isOnGround = false;
             }
             break;
         case 'g':
