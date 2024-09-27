@@ -25,7 +25,7 @@ html, body {
     width: 100%;
     align-items: center;
     padding: 20px;
-    top: 10px; /* Ajusta la posición según lo necesites */
+    top: 10px;
 }
 
 .healthBar {
@@ -37,12 +37,12 @@ html, body {
     height: 30px;
     margin: 0 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-    overflow: hidden; /* Para que el contenido interno se ajuste a los bordes redondeados */
+    overflow: hidden;
 }
 
 .health {
     position: absolute;
-    background: linear-gradient(90deg, #28a745, #218838); /* Degradado de verde para la barra de vida */
+    background: linear-gradient(90deg, #28a745, #218838); 
     top: 0;
     left: 0; 
     bottom: 0;
@@ -63,24 +63,23 @@ html, body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
     margin: 0 10px;
     font-weight: bold; 
-    font-size: 21px; /* Tamaño de texto más acorde al diseño moderno */
+    font-size: 21px;
 }
 
 #displayText {
     position: absolute;
     color: black;
-    display: none; /* Mantener oculto inicialmente */
+    display: none; 
     align-items: center;
     justify-content: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px; /* Ajusta el tamaño de la fuente según lo necesites */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente para mejor legibilidad */
-    padding: 10px; /* Espaciado interno */
-    border: 2px solid black; /* Borde para mejor definición */
+    font-size: 24px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 10px;
+    border: 2px solid black; 
 }
-
 
 canvas {
     display: block;
@@ -109,4 +108,28 @@ canvas {
     align-items: center;
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.9);
+}
+
+#menuPrincipal button, #endGameMenu button{
+    background-color: #111;
+    color: #00ffcc;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.6), 
+                inset 0px 0px 10px rgba(0, 255, 204, 0.8);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#menuPrincipal button:hover {
+    transform: scale(1.1); 
+    box-shadow: 0px 0px 25px rgba(0, 255, 204, 0.8), 
+                inset 0px 0px 15px rgba(0, 255, 204, 1);
+}
+
+#menuPrincipal button:active {
+    transform: scale(0.95);
 }
