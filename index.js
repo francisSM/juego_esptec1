@@ -10,12 +10,13 @@ const gravity = 1;
 const hitSound = new Audio('media/hit.mp3');
 hitSound.volume = 0.08;
 
-class Sprite {
-    constructor({ position, velocity, offset }) {
+class jugador {
+    constructor({ position, velocity, offset, color }) {
         this.position = position;
         this.velocity = velocity;
         this.width = 50; 
         this.height = 150;
+        this.color = color;
         this.lastKey;
         this.isOnGround = false;
         this.attackBox = {
@@ -33,7 +34,7 @@ class Sprite {
     }
 
     draw() {
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = this.color;
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         
         if (this.isAttacking) {
@@ -89,7 +90,7 @@ class Sprite {
     }
 }
 
-const player = new Sprite({
+const player = new jugador({
     position: {
         x: 150,
         y: 474
@@ -101,10 +102,11 @@ const player = new Sprite({
     offset: {
         x: 0,
         y: 0
-    }
+    },
+    color: 'blue'
 });
 
-const enemy = new Sprite({
+const enemy = new jugador({
     position: {
         x: 1950,
         y: 474
@@ -116,7 +118,8 @@ const enemy = new Sprite({
     offset: {
         x: -50,
         y: 0
-    }
+    },
+    color: 'red'
 });
 
 const keys = {
