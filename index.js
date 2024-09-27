@@ -135,74 +135,13 @@ function rectangularcollision({ rectangle1, rectangle2 }) {
     );
 }
 
-function displayResult(result) {
-    const displayTextElement = document.getElementById('displayText');
-    displayTextElement.innerHTML = result;
-    displayTextElement.style.display = 'flex';
-}
-
-// Variables para el menú y los botones
-const menuPrincipal = document.getElementById('menuPrincipal');
-const container = document.getElementById('container');
-const startGameBtn = document.getElementById('startGameBtn');
-const exitGameBtn = document.getElementById('exitGameBtn');
-const playAgainBtn = document.getElementById('playAgainBtn');
-const backToMenuBtn = document.getElementById('backToMenuBtn');
-const endGameMenu = document.getElementById('endGameMenu');
-
-// Función para iniciar el juego
-function startGame() {
-    menuPrincipal.style.display = 'none';
-    container.style.display = 'block';
-    gameOver = false;
-    
-    player.position = { x: 150, y: 474 };
-    player.velocity = { x: 0, y: 0 };
-    
-    enemy.position = { x: 1600, y: 474 };
-    enemy.velocity = { x: 0, y: 0 };
-    
-    player.health = 100;
-    enemy.health = 100;
-    document.querySelector('#playerHealth').style.width = player.health + '%';
-    document.querySelector('#enemyHealth').style.width = enemy.health + '%';
-    
-    document.getElementById('displayText').style.display = 'none';
-    endGameMenu.style.display = 'none';
-    animate();
-}
-
-
-// Función para volver al menú principal
-function backToMenu() {
-    menuPrincipal.style.display = 'block';  // Mostrar el menú principal
-    container.style.display = 'none';       // Ocultar el contenedor del juego
-    endGameMenu.style.display = 'none';     // Asegúrate de ocultar el menú de fin de juego
-    document.getElementById('displayText').style.display = 'none'; // Ocultar cualquier texto de resultado
-    window.cancelAnimationFrame(animationId);
-}
-
-
-startGameBtn.addEventListener('click', startGame);
-
-exitGameBtn.addEventListener('click', () => {
-    window.close();
-});
-
-backToMenuBtn.addEventListener('click', backToMenu);
-playAgainBtn.addEventListener('click', startGame);
-
-function showEndGameMenu() {
-    endGameMenu.style.display = 'flex';
-}
-
 function determineWinner() {
     if (enemy.health <= 0) {
         displayResult('¡Ganó el Player 1!');
         gameOver = true;
         showEndGameMenu();
     } else if (player.health <= 0) {
-        displayResult('¡Ganó Player 2!');
+        displayResult('¡Ganó el Player 2!');
         gameOver = true;
         showEndGameMenu();
     } else if (enemy.health <= 0 && player.health <= 0) {
@@ -248,8 +187,7 @@ function animate() {
         player.isAttacking = false;
         enemy.health -= 20;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
-        console.log('Player hit enemy');
-        determineWinner(); // Verificar si el juego ha terminado
+        determineWinner();
     }
 
     // Colisión del enemigo atacando al jugador
@@ -262,14 +200,13 @@ function animate() {
         enemy.isAttacking = false;
         player.health -= 20;
         document.querySelector('#playerHealth').style.width = player.health + '%';
-        console.log('Enemy hit player');
         determineWinner();
     }
 }
 
 // Movimiento
 window.addEventListener('keydown', (event) => {
-    if (gameOver) return; // No permitir movimiento si el juego ha terminado
+    if (gameOver) return;
 
     switch (event.key) {
         case 'd':
@@ -310,7 +247,7 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('keyup', (event) => {
-    if (gameOver) return; // No permitir movimiento si el juego ha terminado
+    if (gameOver) return;
 
     switch (event.key) {
         case 'd':
