@@ -68,7 +68,7 @@ class Sprite {
         this.position.y += this.velocity.y;
 
         // Verificar si el jugador está tocando el suelo
-        if (this.position.y + this.height + this.velocity.y >= canvas.height - 100) {
+        if (this.position.y + this.height + this.velocity.y >= canvas.height - 63) {
             this.velocity.y = 0;
             this.isOnGround = true;  // El jugador está tocando el suelo
         } else {
