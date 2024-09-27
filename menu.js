@@ -12,11 +12,9 @@ function startGame() {
     container.style.display = 'block';
     gameOver = false;
 
-    // Definir las distancias proporcionales desde los bordes
-    const playerOffset = 0.1; // 10% desde el borde izquierdo
-    const enemyOffset = 0.9; // 90% desde el borde izquierdo
+    const playerOffset = 0.1;
+    const enemyOffset = 0.9;
 
-    // Calcular las posiciones en función del ancho de la ventana
     const windowWidth = window.innerWidth;
 
     player.position = { 
@@ -41,9 +39,8 @@ function startGame() {
     animate();
 }
 
-// Función para volver al menú principal
 function backToMenu() {
-    window.location.href = 'index.html'; // Redirigir al menú principal
+    window.location.href = 'index.html'; // redirigir al menú principal
 }
 
 function displayResult(result) {
