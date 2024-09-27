@@ -7,6 +7,8 @@ canvas.height = window.innerHeight;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 1;
 
+const hitSound = new Audio('media/hit.mp3');
+
 class Sprite {
     constructor({ position, velocity, offset }) {
         this.position = position;
@@ -79,6 +81,7 @@ class Sprite {
 
     attack() {
         this.isAttacking = true;
+        hitSound.play();  // Reproduce el sonido de ataque
         setTimeout(() => {
             this.isAttacking = false;
         }, 100);
