@@ -139,20 +139,24 @@ function determineWinner() {
     if (enemy.health <= 0) {
         displayResult('¡Ganó el Player 1!');
         gameOver = true;
+        stopMusic(); // Detener la música cuando el juego termina
         showEndGameMenu();
     } else if (player.health <= 0) {
         displayResult('¡Ganó el Player 2!');
         gameOver = true;
+        stopMusic(); // Detener la música cuando el juego termina
         showEndGameMenu();
     } else if (enemy.health <= 0 && player.health <= 0) {
         displayResult('¡Empate!');
         gameOver = true;
+        stopMusic(); // Detener la música cuando el juego termina
         showEndGameMenu();
     }
 }
 
 function animate() {
     if (gameOver) return;
+    if (!fightMusic.playing) startMusic();
     animationId = window.requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -203,6 +207,32 @@ function animate() {
         determineWinner();
     }
 }
+
+// Musica
+
+const fightMusic = new Audio('media/Fight.wav');
+
+// Función para iniciar la música
+function startMusic() {
+    fightMusic.play();
+    fightMusic.loop = true; // Repetir la música mientras el juego está activo
+}
+
+// Función para detener la música
+function stopMusic() {
+    fightMusic.pause();
+    fightMusic.currentTime = 0; // Reinicia la música al principio
+}
+
+fightMusic.playing = false;
+fightMusic.onplay = function() {
+    fightMusic.playing = true;
+};
+
+fightMusic.onpause = function() {
+    fightMusic.playing = false;
+}
+
 
 // Movimiento
 window.addEventListener('keydown', (event) => {
