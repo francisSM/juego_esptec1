@@ -11,18 +11,31 @@ function startGame() {
     menuPrincipal.style.display = 'none';
     container.style.display = 'block';
     gameOver = false;
-    
-    player.position = { x: 150, y: 474 };
+
+    // Definir las distancias proporcionales desde los bordes
+    const playerOffset = 0.1; // 10% desde el borde izquierdo
+    const enemyOffset = 0.9; // 90% desde el borde izquierdo
+
+    // Calcular las posiciones en función del ancho de la ventana
+    const windowWidth = window.innerWidth;
+
+    player.position = { 
+        x: windowWidth * playerOffset, 
+        y: 474 
+    };
     player.velocity = { x: 0, y: 0 };
-    
-    enemy.position = { x: 1600, y: 474 };
+
+    enemy.position = { 
+        x: windowWidth * enemyOffset, 
+        y: 474 
+    };
     enemy.velocity = { x: 0, y: 0 };
-    
+
     player.health = 100;
     enemy.health = 100;
     document.querySelector('#playerHealth').style.width = player.health + '%';
     document.querySelector('#enemyHealth').style.width = enemy.health + '%';
-    
+
     document.getElementById('displayText').style.display = 'none';
     endGameMenu.style.display = 'none';
     animate();
@@ -30,7 +43,7 @@ function startGame() {
 
 // Función para volver al menú principal
 function backToMenu() {
-    window.location.href = 'index.html'; // solución trucha :D
+    window.location.href = 'index.html'; // Redirigir al menú principal
 }
 
 function displayResult(result) {
