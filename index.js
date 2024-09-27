@@ -8,6 +8,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 1;
 
 const hitSound = new Audio('media/hit.mp3');
+hitSound.volume = 0.08;
 
 class Sprite {
     constructor({ position, velocity, offset }) {
@@ -214,6 +215,7 @@ function animate() {
 // Musica
 
 const fightMusic = new Audio('media/Fight.wav');
+fightMusic.volume = 0.02;
 
 // Función para iniciar la música
 function startMusic() {
