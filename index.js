@@ -102,7 +102,7 @@ const player = new Sprite({
 
 const enemy = new Sprite({
     position: {
-        x: 1300,
+        x: 1950,
         y: 474
     },
     velocity: {
@@ -210,14 +210,17 @@ window.addEventListener('keydown', (event) => {
 
     switch (event.key) {
         case 'd':
+        case 'D':
             keys.d.pressed = true;
             lastKey = 'd';
             break;
         case 'a':
+        case 'A':
             keys.a.pressed = true;
             lastKey = 'a';
             break;
         case 'w':
+        case 'W':
             if (player.isOnGround) {
                 player.velocity.y = -20;
                 player.isOnGround = false;
@@ -251,9 +254,11 @@ window.addEventListener('keyup', (event) => {
 
     switch (event.key) {
         case 'd':
+        case 'D':
             keys.d.pressed = false;
             break;
         case 'a':
+        case 'A':
             keys.a.pressed = false;
             break;
     }
