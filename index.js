@@ -265,6 +265,7 @@ window.addEventListener('keydown', (event) => {
             }
             break;
         case 'g':
+        case 'G':
             player.attack();
             break;
         case 'ArrowRight':
