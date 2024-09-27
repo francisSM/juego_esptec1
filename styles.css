@@ -31,31 +31,39 @@ html, body {
 .healthBar {
     position: relative;
     width: 100%;
-    border: 4px solid black;
-    background-color: red;
+    border-radius: 15px; 
+    border: 5px solid black; 
+    background: #d9534f; 
     height: 30px;
-    margin: 0 10px; /* Espaciado entre las barras de salud */
+    margin: 0 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    overflow: hidden; /* Para que el contenido interno se ajuste a los bordes redondeados */
 }
 
 .health {
     position: absolute;
-    background: green;
+    background: linear-gradient(90deg, #28a745, #218838); /* Degradado de verde para la barra de vida */
     top: 0;
-    right: 0;
+    left: 0; 
     bottom: 0;
-    width: 100%; /* Cambia este valor dinámicamente con JavaScript */
+    width: 100%; 
+    border-radius: 15px; 
+    transition: width 0.5s ease; 
 }
 
 #separador {
-    background-color: white;
+    background-color: #f8f9fa; 
     width: 100px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;
-    border: 4px solid black;
-    margin: 0 10px; /* Espaciado del temporizador */
+    color: solid black; 
+    border-radius: 10px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    margin: 0 10px;
+    font-weight: bold; 
+    font-size: 21px; /* Tamaño de texto más acorde al diseño moderno */
 }
 
 #displayText {
