@@ -30,11 +30,7 @@ function startGame() {
 
 // Función para volver al menú principal
 function backToMenu() {
-    menuPrincipal.style.display = 'block';  
-    container.style.display = 'none';       
-    endGameMenu.style.display = 'none';     
-    document.getElementById('displayText').style.display = 'none'; 
-    window.cancelAnimationFrame(animationId);
+    window.location.href = 'index.html'; // solución trucha :D
 }
 
 function displayResult(result) {
