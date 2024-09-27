@@ -8,7 +8,8 @@
 html, body {
     height: 100%;
     overflow: hidden;
-    background-color: lightblue;
+    background-image: url('img/Background.png');
+    background-position: center -45px;
 }
 
 #container {
